@@ -1,43 +1,88 @@
 #pragma once
-//#include <boost/python/detail/wrap_python.hpp>
-//#include <boost/python.hpp>
+#include <boost/python/detail/wrap_python.hpp>
+#include <boost/python.hpp>
 #include <boost/python/numpy.hpp>
 #include <iostream>
 #include "Constants.h"
 #include "Board.h"
 
-
-
-
-//namespace p = boost::python;
-//namespace np = boost::python::numpy;
+namespace p = boost::python;
+namespace np = boost::python::numpy;
 using namespace Connect4;
 
 // Python callable function of playPiece
-PyObject* playPiece(PyObject *, PyObject* o)
+bool playPiece(PyObject* o)
 {
-    return PyBool_FromLong(Board::Instance()->playPiece(PyLong_AsLong(o)));
+    return Board::Instance()->playPiece(PyLong_AsLong(o));
 }
 
-PyObject* printBoard(PyObject *, PyObject* o)
+int getResult()
+{
+    return int(Board::Instance()->getState());
+}
+
+bool getTurn()
+{
+    return Board::Instance()->getTurn();
+}
+
+void printBoard()
 {
     Board::Instance()->printBoard(true);
-    return Py_None;
 }
 
-/*np::ndarray getEmptyBoard(PyObject *, PyObject* o)
+int cSize()
 {
-    np::ndarray py_array = np::from_data(Board::Instance()->getEmptyBoard().data(), 
-                                        np::dtype::get_builtin<bool>(),
-                                        p::make_tuple((CSIZE, RSIZE)),
-                                        p::make_tuple(sizeof(bool)),
-                                        p::object());
-    for (int row = 0; row < RSIZE; ++row)
-    {
-        for (int column = 0; column < CSIZE; ++column)
-        {
-            std::cout << p::extract<char const *>(p::str(py_array)) << std::endl;
-        }
-    }
-    return py_array;
-}*/
+    return CSIZE;
+}
+
+int rSize()
+{
+    return RSIZE;
+}
+
+int actionSize()
+{
+    return ACTIONSIZE;
+}
+
+np::ndarray getEmptyBoard()
+{
+    return np::from_data(&Board::Instance()->getEmptyBoard(), 
+                            np::dtype::get_builtin<bool>(),
+                            p::make_tuple(CSIZE, RSIZE),
+                            p::make_tuple(sizeof(bool) * RSIZE, sizeof(bool)),
+                            p::object());
+}
+
+np::ndarray getPlayerOneBoard()
+{
+    return np::from_data(&Board::Instance()->getPlayerOneBoard(),
+                            np::dtype::get_builtin<bool>(),
+                            p::make_tuple(CSIZE, RSIZE),
+                            p::make_tuple(sizeof(bool) * RSIZE, sizeof(bool)),
+                            p::object());
+}
+
+np::ndarray getPlayerTwoBoard()
+{
+    return np::from_data(&Board::Instance()->getPlayerTwoBoard(),
+                            np::dtype::get_builtin<bool>(),
+                            p::make_tuple(CSIZE, RSIZE),
+                            p::make_tuple(sizeof(bool) * RSIZE, sizeof(bool)),
+                            p::object());
+}
+
+np::ndarray getLegalMoves()
+{
+    return np::from_data(&Board::Instance()->getLegalMoves(),
+                            np::dtype::get_builtin<bool>(),
+                            p::make_tuple(CSIZE),
+                            p::make_tuple(sizeof(bool)),
+                            p::object());
+}
+
+void reset()
+{
+    Board::Instance()->reset();
+}

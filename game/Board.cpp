@@ -7,6 +7,7 @@ Board* Board::instance = NULL;
 Board::Board()
 {
     playerOneTurn = true;
+    state = 0;
 
     initializeBoard(emptyBoard, true);
     initializeBoard(playerOneBoard, false);
@@ -15,6 +16,23 @@ Board::Board()
     for (int i = 0; i < CSIZE; ++i)
     {
         currRows[i] = RSIZE - 1;
+        legalMoves[i] = true;
+    }
+}
+
+void Board::reset()
+{
+    playerOneTurn = true;
+    state = 0;
+
+    initializeBoard(emptyBoard, true);
+    initializeBoard(playerOneBoard, false);
+    initializeBoard(playerTwoBoard, false);
+
+    for (int i = 0; i < CSIZE; ++i)
+    {
+        currRows[i] = RSIZE - 1;
+        legalMoves[i] = true;
     }
 }
 
@@ -110,7 +128,8 @@ bool Board::playPiece(int column)
     // check if the move is legal
     if (!moveLegal(column))
     {
-        std::cerr << "Illegal move!" << std::endl;
+        std::cerr << "Illegal move! " << column << std::endl;
+        printBoard(true);
         return false;
     }
 
@@ -128,15 +147,21 @@ bool Board::playPiece(int column)
         emptyBoard      [column][row] = false;
     }
 
+    // increase number of pieces at the column, change turns
+    currRows[column]--;
+    if (currRows[column] == -1)
+    {
+        legalMoves[column] = false;
+    }
+
     // check whether the game is over
     if (gameOver())
     {
-        showResult();
+        setState();
+        //showResult();
         return true;
     }
 
-    // increase number of pieces at the column, change turns
-    currRows[column]--;
     playerOneTurn = !playerOneTurn;
 
     return false;
@@ -151,7 +176,7 @@ bool Board::moveLegal(int column) const
     }
 
     // the column is full
-    if (currRows[column] >= RSIZE)
+    if (legalMoves[column] == false)
     {
         return false;
     }
@@ -162,7 +187,8 @@ bool Board::moveLegal(int column) const
 bool Board::gameOver() const
 {
     return (gameOverHorizontal() || gameOverVertical() ||
-            gameOverPosSlope()   || gameOverNegSlope());
+            gameOverPosSlope()   || gameOverNegSlope() ||
+            gameOverTie());
 }
 
 bool Board::gameOverHorizontal() const
@@ -280,7 +306,7 @@ bool Board::gameOverNegSlope() const
 {
     // go through whole board, check if current player has
     // 4 in a negative slope row
-    for (int row = RSIZE - 4; row < RSIZE; ++row)
+    for (int row = RSIZE - 4; row >= 0; --row)
     {
         for (int column = 0; column < CSIZE - 3; ++column)
         {
@@ -313,15 +339,55 @@ bool Board::gameOverNegSlope() const
     return false;
 }
 
+bool Board::gameOverTie() const
+{
+    for (bool playable : legalMoves)
+    {
+        if (playable)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void Board::setState()
+{
+    if (playerOneTurn)
+    {
+        state = 1;
+    }
+
+    else
+    {
+        state = 2;
+    }
+
+    // check if game is tie
+    if (gameOverTie())
+    {
+        state = 3;
+    }
+}
+
 void Board::showResult() const
 {
     std::cout << std::endl;
     std::cout << "Game over. ";
 
-    playerOneTurn ? std::cout << PLAYER_ONE
-        : std::cout << PLAYER_TWO;
-
-    std::cout << " wins!";
+    if (state == 1)
+    {
+        std::cout << "Player 1 wins!";
+    }
+    else if (state == 2)
+    {
+        std::cout << "Player 2 wins!";
+    }
+    else if (state == 3)
+    {
+        std::cout << "Tie!";
+    }
 
     printBoard(false);
 }

@@ -24,11 +24,20 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="communicator.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="environment.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
+    <Compile Include="manual_play.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="network.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="random_agent.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -36,11 +45,6 @@
     <ProjectReference Include="..\game\game.vcxproj">
       <Name>game</Name>
       <Project>{f007bee2-68e8-4044-8bce-8be2be7c0e14}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\test\test.vcxproj">
-      <Name>test</Name>
-      <Project>{53ff4ab4-dd57-48b8-ba6a-2aa68f87eead}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

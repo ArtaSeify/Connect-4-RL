@@ -5,6 +5,9 @@ using namespace Connect4;
 
 int main()
 {
+    Py_Initialize();
+    np::initialize();
+
     Board* board = Board::Instance();
 
     bool over = false;
@@ -17,4 +20,6 @@ int main()
 
         over = board->playPiece(column);
     }
+
+    system("pause");
 }

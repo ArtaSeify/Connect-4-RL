@@ -10,14 +10,16 @@ class Board
     BoardType       emptyBoard;
     BoardType       playerOneBoard;
     BoardType       playerTwoBoard;
-    VectorType      currRows;
+    CharArray       currRows;
+    BoolArray       legalMoves;
     bool            playerOneTurn;
+    char            state;  // 0: not over, 1: player 1 won, 2: player 2 won, 3: tie
 
     Board();
 
     // initializes all indices of board with value
     void initializeBoard(BoardType & board, bool value);
-    
+
     // prints the content of a specific board
     void printBoardDebug(const BoardType & board) const;
     
@@ -42,8 +44,14 @@ class Board
     // checks whether the current player has 4 in a negative slope row
     bool gameOverNegSlope() const;
 
+    // checks whether the game is a tie
+    bool gameOverTie() const;
+
     // prints the results of the game (game must be over)
     void showResult() const;
+
+    // sets the state of the game
+    void setState();
 
 public:
     static Board* Instance();
@@ -55,11 +63,17 @@ public:
     void printBoard(bool printPlayerTurn) const;
 
     // play a piece at the specified column. returns true if game is over, else false
-    bool playPiece(int column);     
+    bool playPiece(int column);   
 
+    // resets the game
+    void reset();
+
+    char getState() const { return state; }
+    bool getTurn() const { return playerOneTurn; }
     const BoardType & getEmptyBoard() const { return emptyBoard; }
     const BoardType & getPlayerOneBoard() const { return playerOneBoard; }
     const BoardType & getPlayerTwoBoard() const { return playerTwoBoard; }
+    const BoolArray & getLegalMoves() const { return legalMoves; }
 };
 }
 
