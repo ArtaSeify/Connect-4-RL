@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Board.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Linker.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PythonFunctions.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{40c27302-6fe5-4cba-bc62-ac6393716845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{d97912e5-a22b-42fe-878e-87b755d69d0b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

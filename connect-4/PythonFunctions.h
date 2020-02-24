@@ -10,7 +10,6 @@ namespace p = boost::python;
 namespace np = boost::python::numpy;
 using namespace Connect4;
 
-// Python callable function of playPiece
 bool playPiece(PyObject* o)
 {
     return Board::Instance()->playPiece(PyLong_AsLong(o));
