@@ -261,4 +261,4 @@ __pycache__/
 *.pyc
 /algorithms/__pycache__
 !/build/*.dll
-/build
+/build/*
