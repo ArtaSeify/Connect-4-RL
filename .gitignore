@@ -259,9 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-/Connect 4/logs1
-/Connect 4/logs1-WR
-/Connect 4/model_trainedovernight
-/Connect 4/models_10k
-/Connect 4/old_model.h5
-/Connect 4/arta-tflogs.zip
+/algorithms/__pycache__
+!/build/*.dll
+/build
