@@ -11,7 +11,7 @@ mock==4.0.1
 numpy==1.18.1
 pip==18.1
 protobuf==3.11.3
-PyYAML==5.3
+PyYAML==5.4
 scipy==1.4.1
 setuptools==40.6.2
 six==1.14.0
