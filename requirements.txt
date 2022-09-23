@@ -10,7 +10,7 @@ Markdown==3.2.1
 mock==4.0.1
 numpy==1.18.1
 pip==18.1
-protobuf==3.11.3
+protobuf==3.18.3
 PyYAML==5.3
 scipy==1.4.1
 setuptools==40.6.2
