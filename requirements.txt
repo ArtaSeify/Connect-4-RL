@@ -13,7 +13,7 @@ pip==18.1
 protobuf==3.11.3
 PyYAML==5.3
 scipy==1.4.1
-setuptools==40.6.2
+setuptools==65.5.1
 six==1.14.0
 tensorboard==1.13.1
 tensorflow-estimator==1.13.0
